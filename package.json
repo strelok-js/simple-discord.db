@@ -1,0 +1,21 @@
+{
+  "name": "simple-discord.db",
+  "version": "0.3.1",
+  "description": "A small library for storing user and guild data in discord bots.",
+  "main": "index.js",
+  "keywords": [
+    "discord.js",
+    "simple",
+    "simple-discord.db",
+    "db"
+  ],
+  "scripts": {
+    "test": "echo \"No test specified\""
+  },
+  "author": "strelok.js",
+  "license": "ISC",
+  "dependencies": {
+    "fs": "^0.0.1-security",
+    "yargs": "^17.7.1"
+  }
+}
