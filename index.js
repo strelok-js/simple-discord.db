@@ -215,6 +215,16 @@ class Memory {
                     if(!this.users.get(member.id)) this.users.add(member.user);
                 }
             });
+            Client.on("voiceStateUpdate", (oldState,newState)=>{
+                const guild = newState.guild??oldState.guild;
+                const member = newState.member??oldState.member;
+                if(guild) {
+                    if(!this.guilds.get(guild.id)) this.guilds.add(guild);
+                    const memGuild = this.guilds.get(guild.id,false);
+                    if(!memGuild.members.get(member.id)) memGuild.members.add(member);
+                    if(!this.users.get(member.id)) this.users.add(member.user);
+                }
+            });
         }
         if(!this._config.noLaterBD) {
             this.setAnyData();
