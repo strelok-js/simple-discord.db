@@ -232,27 +232,27 @@ class Memory {
             this.setUsers();
         }
     }
-    console({clear}) {//!!
+    console({color}={}) {//!!
         let membersLength = 0;
         if(this.guilds) for (const key in this.guilds) {
             if(this.guilds[key].members) membersLength+=this.guilds[key].members.length;
         } 
-        function colored(data, colored) {
-            if(!clear) colored="";
-            return colored+data+["","\x1b[0m"][+clear];
+        function colored(data, datColor) {
+            if(!color) datColor="";
+            return datColor+data+(["","\x1b[0m"][+color]);
         }
         const def = {
-            true: ["","\x1b[32mTrue\x1b[0m"][+clear],
-            false: ["","\x1b[31mFalse\x1b[0m"][+clear]
+            true: ["True","\x1b[32mTrue\x1b[0m"][+color],
+            false: ["False","\x1b[31mFalse\x1b[0m"][+color]
         };
         const text = "" +
         ` ┍━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┑` + "\n"+
         ` ┝━━┥ Name DB:-------> ${colored(this.name,"\x1b[33m")}` + "\n"+
-        ` ┝━━┥ Elements:------> \x1b[33m${colored((this.guilds?this.guilds.length:0)+membersLength+(this.users?this.users.length:0)+" count","\x1b[33m")}\x1b[0m` + "\n"+
+        ` ┝━━┥ Elements:------> ${colored(((this.guilds?this.guilds.length:0)+membersLength+(this.users?this.users.length:0))+" count","\x1b[33m")}\x1b[0m` + "\n"+
         ` ┝━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┥` + "\n"+
-        ` ┝━━┥ Guilds:--------> \x1b[33m${colored(this.guilds.length+" count","\x1b[33m")}` + "\n"+
-        ` ┝━━┥ Members:-------> \x1b[33m${colored(membersLength+" count","\x1b[33m")}` + "\n"+
-        ` ┝━━┥ Users:---------> \x1b[33m${colored(this.users.length+" count","\x1b[33m")}` + "\n"+
+        ` ┝━━┥ Guilds:--------> ${colored(this.guilds.length+" count","\x1b[33m")}` + "\n"+
+        ` ┝━━┥ Members:-------> ${colored(membersLength+" count","\x1b[33m")}` + "\n"+
+        ` ┝━━┥ Users:---------> ${colored(this.users.length+" count","\x1b[33m")}` + "\n"+
         ` ┝━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┥` + "\n"+
         ` ┝━━┥ BackUP: ${this._config.backUp.enable?def.true:def.false}` + "\n"+
         ` ┝━━┥ BackUP Time: ${colored(this._config.backUp.time,"\x1b[33m")}` + "\n"+
@@ -335,7 +335,7 @@ class Memory {
             }
         });
     }
-    async create() {
+    async create({yargs}={}) {
         return new Promise(async (resolve, reject) => {
             const memoryData = {name: this.name, guilds: {}, users: {}},
             configData = {
@@ -365,10 +365,11 @@ class Memory {
                 FS.writeFile(`./${this.name}/Schems/members.js`, `module.exports = `+members.toString()),
             ]).catch(reject);
 
-            this.setAnyData();
-            this.setGuilds();
-            this.setUsers();
-            
+            if(!yargs) {
+                this.setAnyData();
+                this.setGuilds();
+                this.setUsers();
+            }
             return resolve(this);
         });
     }
@@ -531,7 +532,7 @@ yargs(hideBin(process.argv))
         default: 'DiscordDB'
     });
 }, (argv) => {
-    new Memory(argv.dbName).create()
+    new Memory(argv.dbName).create({yargs:true})
     .then(el=>console.log(`A database named ${argv.dbName} has been created.`))
     .catch(el=>console.log('\033[31m Something went wrong. The database was not created.\n \033[0m'+el));
 })

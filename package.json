@@ -1,16 +1,21 @@
 {
   "name": "simple-discord.db",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "A small library for storing user and guild data in discord bots.",
   "main": "index.js",
   "keywords": [
     "discord.js",
     "simple",
     "simple-discord.db",
-    "db"
+    "db",
+    "sddb"
   ],
   "scripts": {
     "test": "echo \"No test specified\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/strelok-js/simple-discord.db"
   },
   "author": "strelok.js",
   "license": "ISC",
