@@ -389,13 +389,13 @@ class Memory {
         
     }
     setAnyData() {
-        return FS.stat(`./${this.name}/AnyData.json`)
-        .then(stats=>{
+        try{
             const AnyData = require(path+`/${this.name}/AnyData.json`);
             for (const key in AnyData) this[key] = AnyData[key];
-        }).catch(err=>{
+        }
+        catch(err){
             console.error("\x1b[33mSDDB: WARN!\x1b[0m AnyData.json cannot be added to memory");
-        });
+        }
     }
     setGuilds() {
         const MemGuilds = require(path+`/${this.name}/Memory.json`).guilds;
