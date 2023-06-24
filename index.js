@@ -232,7 +232,7 @@ class Memory {
             this.setUsers();
         }
     }
-    console({color}={}) {//!!
+    console({color}={color:true}) {//!!
         let membersLength = 0;
         if(this.guilds) for (const key in this.guilds) {
             if(this.guilds[key].members) membersLength+=this.guilds[key].members.length;
